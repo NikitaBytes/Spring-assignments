@@ -1,0 +1,33 @@
+# Игнорируем каталоги IDE
+.idea/
+.vscode/
+*.iml
+
+# Игнорируем скомпилированные файлы Java
+target/
+*.class
+
+# Игнорируем логи и файлы временных данных
+logs/
+*.log
+hs_err_pid*
+
+# Игнорируем файлы системы сборки Maven
+.mvn/
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/dependency-reduced-pom.xml
+**/release.properties
+
+# Игнорируем файлы MySQL и другие базы данных
+*.sql
+*.db
+
+# Игнорируем настройки ОС
+.DS_Store
+Thumbs.db
+
+# Игнорируем файлы среды разработки (Eclipse, IntelliJ)
+*.ipr
+*.iws
+*.bak
