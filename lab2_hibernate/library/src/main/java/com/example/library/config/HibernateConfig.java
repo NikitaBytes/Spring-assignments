@@ -26,7 +26,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        // Указываем пакеты, в которых расположены сущности
+        // Указываем пакеты, где расположены наши entity-классы
         sessionFactory.setPackagesToScan("com.example.library.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
@@ -34,18 +34,15 @@ public class HibernateConfig {
 
     /**
      * Настройки Hibernate.
-     * Важно: убрали Environment.HBM2DDL_AUTO = "update",
-     * чтобы не конфликтовать с application.properties.
+     * Важно явно прописать HBM2DDL_AUTO, иначе таблицы не будут созданы
+     * (так как spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration).
      */
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         properties.put(Environment.SHOW_SQL, "true");
-        // Если нужно «вручную» задать HBM2DDL_AUTO, можно раскомментировать и заменить
-        // properties.put(Environment.HBM2DDL_AUTO, "create-drop");
-        //
-        // Но лучше всё читать из application.properties, где есть:
-        // spring.jpa.hibernate.ddl-auto=create-drop
+        // Для тестов удобно create-drop: схема создаётся заново при старте, удаляется при завершении
+        properties.put(Environment.HBM2DDL_AUTO, "create-drop");
         return properties;
     }
 
